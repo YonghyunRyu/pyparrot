@@ -114,31 +114,30 @@ def next_pos(corner):
     pos_y = sum_y/4
     pos_x = sum_x/4
 
-    if pos_x >= WIDTH_CENTER + THRESHOLD:
+    if pos_x >= WIDTH_CENTER + THRESHOLD/2:
         diff_x = pos_x - WIDTH_CENTER
         print(pos_y, pos_x, "rotate_right") # yaw should be positive
-        yaw = (diff_x/THRESHOLD + 1)*2
+        yaw = (diff_x//THRESHOLD + 1)*3
 
-    elif pos_x <= WIDTH_CENTER - THRESHOLD:
+    elif pos_x <= WIDTH_CENTER - THRESHOLD/2:
         diff_x = WIDTH_CENTER - pos_x
         print(pos_y, pos_x, "rotate_left") # yas should be negative
-        yaw = -(diff_x/THRESHOLD + 1)*2
+        yaw = -(diff_x//THRESHOLD + 1)*3
 
-
-    if yaw != 0:
+    if math.fabs(yaw) >= 9:
         return roll, pitch, yaw, vertical_movement
 
-    if pos_y >= HEIGHT_CENTER:
+    if pos_y >= HEIGHT_CENTER - THRESHOLD/2:
         diff_y = pos_y - HEIGHT_CENTER
         vertical_movement = -(diff_y/THRESHOLD + 2)*3
         print(pos_y, pos_x, "MOVE_DOWN")
 
-    elif pos_y <= HEIGHT_CENTER - THRESHOLD*2:
+    elif pos_y <= HEIGHT_CENTER - THRESHOLD:
         print(pos_y, pos_x, "MOVE_UP")
         diff_y = HEIGHT_CENTER - pos_y
-        vertical_movement = (diff_y/THRESHOLD)*3
+        vertical_movement = (diff_y/THRESHOLD + 1)*3
 
-    if math.fabs(vertical_movement) >= 9:
+    if math.fabs(vertical_movement) >= 8:
         return roll, pitch, yaw, vertical_movement
 
 
@@ -152,6 +151,8 @@ def next_pos(corner):
         if side <= TARGET_DISTANCE - 50:
             pitch += PITCH_DELTA
         if side <= TARGET_DISTANCE - 90:
+            pitch += PITCH_DELTA
+        if side <= TARGET_DISTANCE - 100:
             pitch += PITCH_DELTA
 
     return roll, pitch, yaw, vertical_movement/2
@@ -287,11 +288,11 @@ if (success):
                         corner = corners[idx][0]
 
                         if marker_id == AWAY_ID:
-                            mambo.fly_direct(roll=0, pitch=0, yaw=-20, vertical_movement=0, duration=1)
+                            mambo.fly_direct(roll=0, pitch=0, yaw=-25, vertical_movement=0, duration=1)
                             mambo.smart_sleep(1)
-                            mambo.fly_direct(roll=0, pitch=-DELTA*2, yaw=8, vertical_movement=0, duration=3)
+                            mambo.fly_direct(roll=0, pitch=-DELTA*3, yaw=10, vertical_movement=0, duration=2)
                             mambo.smart_sleep(3)
-                            mambo.fly_direct(roll=0, pitch=DELTA, yaw=-20, vertical_movement=0, duration=1)
+                            mambo.fly_direct(roll=0, pitch=DELTA, yaw=-25, vertical_movement=0, duration=1)
                             mambo.smart_sleep(1)
 
                         elif marker_id == ATTACK_ID and middle(corner):
