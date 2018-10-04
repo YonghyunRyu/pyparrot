@@ -293,7 +293,6 @@ if (success):
                             mambo.smart_sleep(3)
                             mambo.fly_direct(roll=0, pitch=DELTA, yaw=-20, vertical_movement=0, duration=1)
                             mambo.smart_sleep(1)
-                            mambo.fly_direct(roll=0, pitch=DELTA, yaw=-20, vertical_movement=0, duration=1)
 
                         elif marker_id == ATTACK_ID and middle(corner):
                             mambo.fly_direct(roll=0, pitch=-DELTA*3, yaw=0, vertical_movement=10, duration=0.8)
