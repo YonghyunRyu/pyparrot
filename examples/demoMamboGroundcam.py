@@ -28,14 +28,15 @@ if (success):
     mambo.smart_sleep(0.5)
 
     picture_names = mambo.groundcam.get_groundcam_pictures_names() #get list of availible files
-    print(picture_names)
-
-    frame = mambo.groundcam.get_groundcam_picture(picture_names[0],True) #get frame which is the first in the array
-
+    print(len(picture_names, picture_names)
+    frame = mambo.groundcam.get_groundcam_picture(picture_names[0], True) #get frame which is the first in the array
     if frame is not None:
         if frame is not False:
             cv2.imshow("Groundcam", frame)
-            cv2.waitKey(100)
+            cv2.waitKey(10)
+
+
+
 
     mambo.safe_land(5)
     mambo.disconnect()

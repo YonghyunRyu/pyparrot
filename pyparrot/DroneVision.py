@@ -99,6 +99,11 @@ class DroneVision:
         print(self.imagePath)
         print(self.utilPath)
 
+        cmd = "rm " + self.imagePath + "/image_*.png"
+        print(cmd)
+        os.system(cmd)
+
+
         # the first step is to open the rtsp stream through ffmpeg first
         # this step creates a directory full of images, one per frame
         print("Opening ffmpeg")

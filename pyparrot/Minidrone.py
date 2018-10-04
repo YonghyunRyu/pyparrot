@@ -249,6 +249,7 @@ class MamboGroundcam:
         print(self.storageFile)
         #self.storageFile = tempfile.NamedTemporaryFile()
 
+
     def _close(self):
 
         self.ftp.close()
@@ -274,6 +275,7 @@ class MamboGroundcam:
         self.ftp.cwd(self.MEDIA_PATH)
         try:
             self.ftp.retrbinary('RETR ' + filename, open(self.storageFile, "wb").write) #download
+            #self._delete_file(filename)
             if cv2_flag and OpenCVAvailable:
                 img = cv2.imread(self.storageFile)
                 return img
@@ -322,6 +324,10 @@ class Minidrone:
         # initialize the sensors and the parser
         self.sensors = MinidroneSensors()
         self.sensor_parser = DroneSensorParser(drone_type="Minidrone")
+
+        list = self.groundcam.get_groundcam_pictures_names()
+        for file in list:
+            self.groundcam._delete_file(file)
 
 
     def set_user_sensor_callback(self, function, args):
